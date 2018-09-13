@@ -47,12 +47,12 @@ int main() {
 		RawBlob * blob = blobs[i];
 		List<RawFrame> frames = {};
 		for (int j : range(blob->frames)) {
-			frames.add({ (u8 *) &blob->pixels[blob->width * blob->height * j], blob->width * 4 });
+			frames.add({ (u8 *) &blob->pixels[blob->width * blob->height * j], blob->width * 4, GIFF_FORMAT_BGRA });
 		}
 		char * path = cat("out/", cat(names.begin()[i], ".gif"));
 		printf("\nwriting %s      width: %d   height: %d   frames: %d   centiSeconds: %d\n",
 			path, blob->width, blob->height, blob->frames, blob->centiSeconds);
-		timers.add(save_gif(blob->width, blob->height, frames, blob->centiSeconds, path, true, GIFF_FORMAT_BGRA));
+		timers.add(save_gif(blob->width, blob->height, frames, blob->centiSeconds, path, true));
 		printf("\n");
 		fflush(stdout);
 	}
@@ -75,6 +75,8 @@ int main() {
 	printf("lost time:   %6.4f\n\n", totals.total - (totals.amble + totals.compress + totals.write));
 
 	//TODO: track input and output sizes and encode speed for each GIF and for all of them together
+
+	printf("runtime: %f\n\n", get_time());
 
 	return 0;
 }

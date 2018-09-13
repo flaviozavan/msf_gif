@@ -4,11 +4,6 @@
 #include "List.hpp"
 #include "common.hpp"
 
-struct RawFrame {
-    u8 * pixels;
-    int pitch;
-};
-
 struct DebugTimers {
 	float cook, choice, amble, palette, inner, compress, write, total;
 };
@@ -17,8 +12,14 @@ struct PixelFormat {
 	int ridx, gidx, bidx, stride;
 };
 
+struct RawFrame {
+    u8 * pixels;
+    int pitch; //how many bytes apart each row is
+    PixelFormat format;
+};
+
 DebugTimers save_gif(int width, int height, List<RawFrame> rawFrames, int centiSeconds,
-					 const char * path, bool dither, PixelFormat format);
+					 const char * path, bool dither);
 
 #define GIFF_FORMAT_RGBA { 0, 1, 2, 4 }
 #define GIFF_FORMAT_BGRA { 2, 1, 0, 4 }
