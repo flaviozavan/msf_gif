@@ -1,9 +1,7 @@
 
-v2.2 TODOs:
-- fix the linked list traversal for loops because they're bugging me
-- BGRA flag
-
 future TODOs:
+- BGRA flag
+- more aggressive checking of invalid API arguments
 - NEON SIMD
 - API for writing pre-palettized data?
 

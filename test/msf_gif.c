@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if 0
+#if 1
 static void * dummy_malloc(void * context, int newSize) {
 	void * ret = malloc(newSize);
 	// printf("MALLOC context: %s, newSize: %d, new: %p\n", context, newSize, ret);

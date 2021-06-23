@@ -46,7 +46,7 @@ REPLACING MALLOC:
 See end of file for license information.
 */
 
-//version 2.1
+//version 2.2
 
 #ifndef MSF_GIF_H
 #define MSF_GIF_H
@@ -283,7 +283,6 @@ static void msf_cook_frame(MsfCookedFrame * frame, uint8_t * raw, uint8_t * used
 /// Frame Compression                                                                                                ///
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// typedef struct MsfBufferHeader
 typedef struct {
     uint8_t * next;
     size_t size;
@@ -455,7 +454,7 @@ static void msf_free_gif_state(MsfGifState * handle) {
     if (handle->lzwMem) MSF_GIF_FREE(handle->customAllocatorContext, handle->lzwMem, lzwAllocSize);
     for (uint8_t * node = handle->listHead; node;) {
         MsfBufferHeader * header = (MsfBufferHeader *) node;
-        node = header->next;
+        node = header->next; //NOTE: remember we have to copy the `next` pointer BEFORE freeing the node holding it
         MSF_GIF_FREE(handle->customAllocatorContext, header, sizeof(MsfBufferHeader) + header->size);
     }
     handle->listHead = NULL; //this implicitly marks the handle as invalid until the next msf_gif_begin() call
